@@ -26,9 +26,9 @@ public class OauthClientTest {
 	
 	private RestTemplate restTemplate;
 	
-	private String clientId = "idc";
+	private String clientId = "client";
 	
-	private String clientSecret = "123456";
+	private String clientSecret = "123";
 	
 	@Before
 	public void testAuthClient() {
