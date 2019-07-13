@@ -1,0 +1,25 @@
+server:
+  port: 8088
+  servlet:
+    context-path: /oauth2
+spring:
+  freemarker:
+    checkTemplateLocation: false
+  mvc:
+    servlet:
+      load-on-startup: 1
+  server:
+    oauth:
+      datasource:
+        url: jdbc:mysql://localhost:3306/idc_oauth?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true
+        username: fort
+        password: 2wsx3edc
+        driverClassName: com.mysql.jdbc.Driver
+    user:
+      datasource:
+        url: jdbc:mysql://localhost:3306/idc_user?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true
+        username: fort
+        password: 2wsx3edc
+        driverClassName: com.mysql.jdbc.Driver
+logging:
+  config: classpath:log4j2.xml

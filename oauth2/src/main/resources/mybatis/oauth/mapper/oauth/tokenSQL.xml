@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="token">
+	<resultMap type="accessToken" id="accessTokenResult">
+		<result property="tokenId" 				column="token_id"/>
+		<result property="token" 				column="token"/>
+		<result property="authenticationId" 	column="authentication_id"/>
+		<result property="userName" 			column="user_name"/>
+		<result property="clientId" 			column="client_id"/>
+		<result property="authentication" 		column="authentication"/>
+		<result property="refreshToken" 		column="refresh_token"/>
+	</resultMap>
+	<resultMap type="refreshToken" id="refreshTokenResult">
+		<result property="tokenId" 				column="token_id"/>
+		<result property="token" 				column="token"/>
+		<result property="authentication" 		column="authentication"/>
+	</resultMap>
+	<select id="queryByTokenId" parameterType="java.lang.String" resultMap="accessTokenResult">
+		<![CDATA[
+			SELECT
+			  `token_id`,
+			  `token`,
+			  `authentication_id`,
+			  `user_name`,
+			  `client_id`,
+			  `authentication`,
+			  `refresh_token`
+			FROM `oauth_access_token` WHERE `token_id` = #{tokenId}
+		]]>
+	</select>
+	<select id="queryByAuthenticationId" parameterType="java.lang.String" resultMap="accessTokenResult">
+		<![CDATA[
+			SELECT
+			  `token_id`,
+			  `token`,
+			  `authentication_id`,
+			  `user_name`,
+			  `client_id`,
+			  `authentication`,
+			  `refresh_token`
+			FROM `oauth_access_token` WHERE `authentication_id` = #{authenticationId}
+		]]>
+	</select>
+	<select id="queryByClientIdAndUserName" parameterType="java.util.HashMap" resultMap="accessTokenResult">
+		<![CDATA[
+			SELECT
+			  `token_id`,
+			  `token`,
+			  `authentication_id`,
+			  `user_name`,
+			  `client_id`,
+			  `authentication`,
+			  `refresh_token`
+			FROM `oauth_access_token` WHERE `client_id` = #{clientId} AND `user_name` = #{userName}
+		]]>
+	</select>
+	<select id="queryByClientId" parameterType="java.lang.String" resultMap="accessTokenResult">
+		<![CDATA[
+			SELECT
+			  `token_id`,
+			  `token`,
+			  `authentication_id`,
+			  `user_name`,
+			  `client_id`,
+			  `authentication`,
+			  `refresh_token`
+			FROM `oauth_access_token` WHERE `client_id` = #{clientId}
+		]]>
+	</select>
+	<delete id="deleteByTokenId" parameterType="java.lang.String">
+		<![CDATA[
+			DELETE FROM `oauth_access_token` WHERE `token_id` = #{tokenId}
+		]]>
+	</delete>
+	<delete id="deleteByRefreshToken" parameterType="java.lang.String">
+		<![CDATA[
+			DELETE FROM `oauth_access_token` WHERE `refresh_token` = #{refreshToken}
+		]]>
+	</delete>
+	<insert id="insertAccessToken" parameterType="accessToken">
+		<![CDATA[
+			INSERT INTO `oauth_access_token` (
+			  `token_id`,
+			  `token`,
+			  `authentication_id`,
+			  `user_name`,
+			  `client_id`,
+			  `authentication`,
+			  `refresh_token`
+			) VALUES (
+			    #{tokenId},
+			    #{token},
+			    #{authenticationId},
+			    #{userName},
+			    #{clientId},
+			    #{authentication},
+			    #{refreshToken}
+			  )
+		]]>
+	</insert>
+	<insert id="insertRefreshToken" parameterType="refreshToken">
+		<![CDATA[
+			INSERT INTO `oauth_refresh_token` (
+			  `token_id`,
+			  `token`,
+			  `authentication`
+			) VALUES (
+			    #{tokenId},
+			    #{token},
+			    #{authentication}
+			  )
+		]]>
+	</insert>
+	<select id="queryRefreshTokenByTokenId" parameterType="java.lang.String" resultMap="refreshTokenResult">
+		<![CDATA[
+			SELECT
+			  `token_id`,
+			  `token`,
+			  `authentication`
+			FROM `oauth_refresh_token` WHERE `token_id` = #{tokenId}
+		]]>
+	</select>
+	<delete id="deleteRefreshByTokenId" parameterType="java.lang.String">
+		<![CDATA[
+			DELETE FROM `oauth_refresh_token` WHERE `token_id` = #{tokenId}
+		]]>
+	</delete>
+</mapper>

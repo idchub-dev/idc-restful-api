@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dept">
+	<resultMap type="dept" id="deptResult">
+		<result property="id" 					column="id"/>
+		<result property="name" 				column="name"/>
+		<result property="grantedAuthority" 	column="granted_authority"/>
+		<result property="description" 			column="description"/>
+		<result property="createTime" 			column="create_time"/>
+		<result property="updateTime" 			column="update_time"/>
+		<result property="parentId" 			column="parent_id"/>
+	</resultMap>
+	
+	<select id="queryByEmpId" parameterType="int" resultMap="deptResult">
+		<![CDATA[
+			SELECT
+			  dept.`id`,
+			  dept.`name`,
+			  dept.`granted_authority`,
+			  dept.`description`,
+			  dept.`create_time`,
+			  dept.`update_time`,
+			  dept.`parent_id`
+			FROM `department` dept,`rel_employee_department` red 
+			WHERE dept.`id` = red.`dept_id` AND red.`emp_id` = #{empId}
+		]]>
+	</select>
+</mapper>
